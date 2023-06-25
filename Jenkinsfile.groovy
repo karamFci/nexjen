@@ -28,13 +28,17 @@
 pipeline {
 	agent none
   stages {
+    stage('fetch code')
+        steps {
+                git branch :  'main' , url: 'https://github.com/karamFci/nexjen.git'
+            }
   	stage('Maven Install') {
     	agent {
       	docker {
         	image 'maven:3.5.0'
         }
-      }
-      steps {
+        }
+        steps {
       	sh 'mvn clean install'
       }
     }
