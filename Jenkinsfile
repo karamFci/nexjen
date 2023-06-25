@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        git 'https://github.com/karamFci/nexjen.git' 
+        git branch: 'main', url: 'https://github.com/karamFci/nexjen.git' 
       }
     }
 
