@@ -12,15 +12,12 @@ pipeline {
                 git branch :  'main' , url: 'https://github.com/karamFci/nexjen.git'
             }
         }
-        stage('Build'){
-            steps{
-                sh 'mvn install -DskipTests'
-            }
-            post{ 
-                success {
-                    echo 'Now Archiving...'
-                }
-            }
-        }
+        stage('Docker Build') {
+    	    agent any
+            steps {
+      	      sh 'docker build -t karamfci/my25nginx:v1 .'
+      }
+    }
+
     }
 }
