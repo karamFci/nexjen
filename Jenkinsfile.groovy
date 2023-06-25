@@ -1,5 +1,5 @@
 pipeline {
-    agent dockerContainer 
+    agent none
     tools {
         maven "MAVEN-3.9.2"
         jdk "ORACELJDK11"
