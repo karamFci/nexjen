@@ -7,11 +7,11 @@ pipeline {
     }
 
     stages {
-        stage('fetch code')
+        stage('fetch code'){
             steps {
                 git branch :  'main' , url: 'https://github.com/karamFci/nexjen.git'
             }
-        
+        }
         stage('Build'){
             steps{
                 sh 'mvn install -DskipTests'
