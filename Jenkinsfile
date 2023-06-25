@@ -7,6 +7,10 @@ pipeline {
     }
 
     stages {
+        stage('Initialize'){
+          def dockerHome = tool 'myDocker'
+          env.PATH = "${dockerHome}/bin:${env.PATH}"
+        }
         stage('fetch code'){
             steps {
                 git branch :  'main' , url: 'https://github.com/karamFci/nexjen.git'
@@ -16,8 +20,8 @@ pipeline {
     	    agent any
             steps {
       	      sh 'docker build -t karamfci/my25nginx:latest .'
-      }
-    }
+             }
+        }
 
     }
 }
