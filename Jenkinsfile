@@ -15,7 +15,7 @@ pipeline {
         stage('Docker Build') {
     	    agent any
             steps {
-      	      sh 'docker build -t karamfci/my25nginx:v1 .'
+      	      sh 'docker build -t karamfci/my25nginx:latest .'
       }
     }
 
