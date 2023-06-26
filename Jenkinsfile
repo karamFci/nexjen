@@ -4,19 +4,19 @@ pipeline {
   stages {
     stage('Clone repository') {
       steps {
-        git 'https://github.com/your-username/your-repo.git'
+        git 'https://github.com/karamFci/nexjen'
       }
     }
     
     stage('Build Docker image') {
       steps {
-        sh 'docker build -t my-nginx .'
+        sh 'docker build -t my26ngix .'
       }
     }
     
     stage('Run Docker container') {
       steps {
-        sh 'docker run -d -p 8888:80 my-nginx'
+        sh 'docker run -d -p 8888:80 my26nginx'
       }
     }
   }
