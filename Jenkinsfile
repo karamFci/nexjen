@@ -1,23 +1,35 @@
 pipeline {
   agent any
-
+  
   stages {
-    stage('Build') {
+    stage('Clone repository') {
       steps {
-        git branch: 'main', url: 'https://github.com/karamFci/nexjen.git' 
+        git 'https://github.com/your-username/your-repo.git'
       }
     }
-
-    stage('Build Docker Image') {
+    
+    stage('Build Docker image') {
       steps {
-        sh 'docker build -t nginx-app .'
+        sh 'docker build -t my-nginx .'
       }
     }
-
-    stage('Run Docker Container') {
+    
+    stage('Run Docker container') {
       steps {
-        sh 'docker run -d -p 80:80 --name nginx-container nginx-app'
+        sh 'docker run -d -p 8888:80 my-nginx'
       }
     }
   }
-}
+  
+//   post {
+//     always {
+//       script {
+//         // Get the container's IP address
+//         def ipAddress = sh(returnStdout: true, script: "docker inspect -f '{{ .NetworkSettings.IPAddress }}' my-nginx").trim()
+        
+//         // Print the container's IP address
+//         echo "Docker container IP address: ${ipAddress}"
+//       }
+//     }
+//   }
+// }
