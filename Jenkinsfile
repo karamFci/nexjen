@@ -4,7 +4,7 @@ pipeline {
   stages {
     stage('Clone repository') {
       steps {
-        git 'https://github.com/karamFci/nexjen'
+        git 'https://github.com/karamFci/nexjen.git'
       }
     }
     
