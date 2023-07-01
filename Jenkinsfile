@@ -19,6 +19,19 @@ pipeline {
         sh 'docker run -d -p 80:80 my30nginx'
       }
     }
+    stage('Push to Nexus') {
+      steps {
+        script {
+          docker.withRegistry('http://localhost:8081/repository/my30repo/', 'nexus-credentials') {
+            def nexusImage = docker.image('my30nginx')
+            nexusImage.push("${env.BUILD_NUMBER}")
+            nexusImage.push("latest")
+          }
+        }
+      }
+    }
+
+
   }
   
 //   post {
