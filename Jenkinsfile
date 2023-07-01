@@ -10,13 +10,13 @@ pipeline {
     
     stage('Build Docker image') {
       steps {
-        sh 'docker build -t my26nginx .'
+        sh 'docker build -t my30nginx .'
       }
     }
     
     stage('Run Docker container') {
       steps {
-        sh 'docker run -d -p 80:80 my26nginx'
+        sh 'docker run -d -p 80:80 my30nginx'
       }
     }
   }
