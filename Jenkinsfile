@@ -29,10 +29,10 @@ pipeline {
     stage('Push to Nexus') {
       steps {
         script {
-          docker.withRegistry('http://'+registry, registryCredentials) {
-            //def nexusImage = docker.image('my30nginx')
-            //nexusImage.push("${env.BUILD_NUMBER}")
-          nexusImage.push("latest")
+            docker.withRegistry('http://'+registry, registryCredentials) {
+              //def nexusImage = docker.image('my30nginx')
+              //nexusImage.push("${env.BUILD_NUMBER}")
+            dockerImage.push("latest")
           }
         }
       }
