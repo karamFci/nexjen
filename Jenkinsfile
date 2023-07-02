@@ -46,7 +46,7 @@ pipeline {
               sh "docker push $registry$imageName:${env.BUILD_NUMBER}"
             }
 
-            }
+            
           } catch (Exception e) {
             println "Error pushing Docker image to Nexus: ${e.message}"
             error("Failed to push Docker image to Nexus")
