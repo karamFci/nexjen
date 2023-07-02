@@ -39,8 +39,13 @@ pipeline {
       steps {
         script {
           try {
-            docker.withRegistry('http://' + registry, 'nexus-credentials') {
-              my30nginx.push("latest")
+            //docker.withRegistry('http://' + registry, 'nexus-credentials') {
+             // my30nginx.push("latest")
+
+            withCredentials([usernamePassword(credentialsId: 'jenkins', passwordVariable: 'PSW', usernameVariable: 'USER')]){
+              sh "echo ${PSW} | docker login -u ${USER} --password-stdin http://localhost:2022/"
+              sh "docker push http://localhost:2022//my30nginx:${BUILD_NUMBER}"  
+
             }
           } catch (Exception e) {
             println "Error pushing Docker image to Nexus: ${e.message}"
