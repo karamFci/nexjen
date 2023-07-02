@@ -17,14 +17,10 @@ pipeline {
     stage('Build Docker image') {
       steps {
         script {
-          try {
-            dockerImage = sh 'docker build -t my30nginx .'
-            echo "#############  ${dockerImage}"
-           // dockerImage.build()
-          } catch (Exception e) {
-            println "Error building Docker image: ${e.message}"
-            error("Failed to build Docker image")
-          }
+
+            sh 'docker build -t my30nginx .'
+ 
+
         }
       }
     }
@@ -32,14 +28,9 @@ pipeline {
     stage('Run Docker container') {
       steps {
         script {
-          try {
-            sh 'docker run -d -p 80:80 dockerImage'
 
-            dockerImage.run("-p 80:80 -d")
-          } catch (Exception e) {
-            println "Error running Docker container: ${e.message}"
-            error("Failed to run Docker container")
-          }
+            sh 'docker run -d -p 80:80 my30nginx'
+
         }
       }
     }
@@ -49,7 +40,7 @@ pipeline {
         script {
           try {
             docker.withRegistry('http://' + registry, 'nexus-credentials') {
-              dockerImage.push("latest")
+              my30nginx.push("latest")
             }
           } catch (Exception e) {
             println "Error pushing Docker image to Nexus: ${e.message}"
