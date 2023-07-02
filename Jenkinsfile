@@ -19,6 +19,7 @@ pipeline {
         script {
           try {
             dockerImage = sh 'docker build -t my30nginx .'
+            echo "this is docker image" + ${dockerImage}
            // dockerImage.build()
           } catch (Exception e) {
             println "Error building Docker image: ${e.message}"
@@ -32,6 +33,8 @@ pipeline {
       steps {
         script {
           try {
+            sh 'docker run -d -p 80:80 dockerImage'
+
             dockerImage.run("-p 80:80 -d")
           } catch (Exception e) {
             println "Error running Docker container: ${e.message}"
