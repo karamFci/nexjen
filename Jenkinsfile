@@ -1,6 +1,6 @@
 pipeline {
   agent any
-  envrionment{
+  environment{
     registryCredentials = "nexus-credentials"
     registry = "localhost:2022/"
 
