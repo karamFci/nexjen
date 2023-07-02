@@ -17,19 +17,21 @@ pipeline {
     stage('Run Docker container') {
       steps {
         sh 'docker run -d -p 80:80 my30nginx'
+        //docker tag my30nginx <nexus-hostname>:<repository-port>/<image>:<tag>
+
       }
     }
-    stage('Push to Nexus') {
-      steps {
-        script {
-          docker.withRegistry('http://localhost:8081/repository/my30repo/', 'nexus-credentials') {
-            def nexusImage = docker.image('my30nginx')
-            nexusImage.push("${env.BUILD_NUMBER}")
-            nexusImage.push("latest")
-          }
-        }
-      }
-    }
+    // stage('Push to Nexus') {
+    //   steps {
+    //     script {
+    //       docker.withRegistry('http://localhost:8081/repository/my30repo/', 'nexus-credentials') {
+    //         def nexusImage = docker.image('my30nginx')
+    //         nexusImage.push("${env.BUILD_NUMBER}")
+    //         nexusImage.push("latest")
+    //       }
+    //     }
+    //   }
+    // }
 
 
   }
