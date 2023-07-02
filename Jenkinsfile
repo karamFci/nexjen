@@ -1,5 +1,10 @@
 pipeline {
   agent any
+  envrionment{
+    registryCredentials = "nexus-credentials"
+    registry = "localhost:2022/"
+
+  }
   
   stages {
     stage('Clone repository') {
@@ -24,10 +29,10 @@ pipeline {
     stage('Push to Nexus') {
       steps {
         script {
-          docker.withRegistry('http://localhost:2022/repository/my2repo', 'nexus-credentials') {
-            def nexusImage = docker.image('my30nginx')
-            nexusImage.push("${env.BUILD_NUMBER}")
-            nexusImage.push("latest")
+          docker.withRegistry('http://'+registry, registryCredentials) {
+            //def nexusImage = docker.image('my30nginx')
+            //nexusImage.push("${env.BUILD_NUMBER}")
+          nexusImage.push("latest")
           }
         }
       }
@@ -47,4 +52,4 @@ pipeline {
 //       }
 //     }
 //   }
- }
+}
