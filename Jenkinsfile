@@ -42,7 +42,7 @@ pipeline {
             //docker.withRegistry('http://' + registry, 'nexus-credentials') {
              // my30nginx.push("latest")
 
-            withCredentials([usernamePassword(credentialsId: '123123', passwordVariable: 'PSW', usernameVariable: 'USER')]){
+            withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'PSW', usernameVariable: 'USER')]){
               sh "echo ${PSW} | docker login -u ${USER} --password-stdin http://localhost:2022/"
               sh "docker push http://localhost:2022//my30nginx:${BUILD_NUMBER}"  
 
