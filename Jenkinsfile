@@ -56,14 +56,14 @@ pipeline {
   stages {
     stage('Clone repository') {
       steps {
-        git url: 'https://github.com/karamFci/nexjen.git', branch: 'main'
+        git url: 'https://github.com/karamFci/nexjen.git', branch: 'master'
       }
     }
 
     stage('Build Docker image') {
       steps {
         script {
-          dockerImage = docker.build("my30nginx")
+          dockerImage = docker.build my30nginx
         }
       }
     }
