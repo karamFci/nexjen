@@ -17,7 +17,13 @@ pipeline {
     stage('Build Docker image') {
       steps {
         script {
-          dockerImage = docker.build imageName
+          try {
+            dockerImage = docker.image(imageName)
+            dockerImage.build()
+          } catch (Exception e) {
+            println "Error building Docker image: ${e.message}"
+            error("Failed to build Docker image")
+          }
         }
       }
     }
@@ -25,7 +31,12 @@ pipeline {
     stage('Run Docker container') {
       steps {
         script {
-          dockerImage.run("-p 80:80 -d")
+          try {
+            dockerImage.run("-p 80:80 -d")
+          } catch (Exception e) {
+            println "Error running Docker container: ${e.message}"
+            error("Failed to run Docker container")
+          }
         }
       }
     }
@@ -33,12 +44,16 @@ pipeline {
     stage('Push to Nexus') {
       steps {
         script {
-          docker.withRegistry('http://'+registry, 'nexus-credentials') {
-          dockerImage.push("latest")
+          try {
+            docker.withRegistry('http://' + registry, 'nexus-credentials') {
+              dockerImage.push("latest")
+            }
+          } catch (Exception e) {
+            println "Error pushing Docker image to Nexus: ${e.message}"
+            error("Failed to push Docker image to Nexus")
           }
         }
       }
     }
-
   }
 }
