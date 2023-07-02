@@ -38,9 +38,13 @@ pipeline {
       steps {
         script {
           try {
-            docker.withRegistry('http://' + registry, 'nexus-credentials') {
-              sh "docker push http://${registry}${imageName}:${BUILD_NUMBER}" 
-
+            // docker.withRegistry('http://' + registry, 'nexus-credentials') {
+            //   sh "docker push http://${registry}${imageName}:${BUILD_NUMBER}" 
+            withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'password', usernameVariable: 'username')]) {
+              sh "docker login -u $username -p $password $registry"
+              sh "docker tag $imageName $registry$imageName:${env.BUILD_NUMBER}"
+              sh "docker push $registry$imageName:${env.BUILD_NUMBER}"
+            }
 
             }
           } catch (Exception e) {
