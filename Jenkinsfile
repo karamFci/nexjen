@@ -21,17 +21,17 @@ pipeline {
 
       }
     }
-    // stage('Push to Nexus') {
-    //   steps {
-    //     script {
-    //       docker.withRegistry('http://localhost:8081/repository/my30repo/', 'nexus-credentials') {
-    //         def nexusImage = docker.image('my30nginx')
-    //         nexusImage.push("${env.BUILD_NUMBER}")
-    //         nexusImage.push("latest")
-    //       }
-    //     }
-    //   }
-    // }
+    stage('Push to Nexus') {
+      steps {
+        script {
+          docker.withRegistry('http://localhost:2022/repository/my2repo', 'nexus-credentials') {
+            def nexusImage = docker.image('my30nginx')
+            nexusImage.push("${env.BUILD_NUMBER}")
+            nexusImage.push("latest")
+          }
+        }
+      }
+    }
 
 
   }
