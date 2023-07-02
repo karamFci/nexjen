@@ -19,7 +19,7 @@ pipeline {
         script {
           try {
             dockerImage = sh 'docker build -t my30nginx .'
-            dockerImage.build()
+           // dockerImage.build()
           } catch (Exception e) {
             println "Error building Docker image: ${e.message}"
             error("Failed to build Docker image")
