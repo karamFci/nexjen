@@ -4,7 +4,6 @@ pipeline {
   environment {
     imageName = "my30nginx"
     registry = 'localhost:2022/'
-    dockerImage = ''
   }
 
   stages {
@@ -40,11 +39,8 @@ pipeline {
         script {
           try {
             docker.withRegistry('http://' + registry, 'nexus-credentials') {
-              sh "docker push http://localhost:2022/my30nginx:${BUILD_NUMBER}" 
+              sh "docker push http://${registry}${imageName}:${BUILD_NUMBER}" 
 
-            // withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'PSW', usernameVariable: 'USER')]){
-            //   sh "echo ${PSW} | docker login -u ${USER} --password-stdin http://localhost:2022/"
-            //   sh "docker push http://localhost:2022/my30nginx:${BUILD_NUMBER}"  
 
             }
           } catch (Exception e) {
