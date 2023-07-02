@@ -39,12 +39,12 @@ pipeline {
       steps {
         script {
           try {
-            //docker.withRegistry('http://' + registry, 'nexus-credentials') {
-             // my30nginx.push("latest")
+            docker.withRegistry('http://' + registry, 'nexus-credentials') {
+              sh "docker push http://localhost:2022/my30nginx:${BUILD_NUMBER}" 
 
-            withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'PSW', usernameVariable: 'USER')]){
-              sh "echo ${PSW} | docker login -u ${USER} --password-stdin http://localhost:8081/"
-              sh "docker push http://localhost:2022/repository/my2repo/my30nginx:${BUILD_NUMBER}"  
+            // withCredentials([usernamePassword(credentialsId: 'nexus-credentials', passwordVariable: 'PSW', usernameVariable: 'USER')]){
+            //   sh "echo ${PSW} | docker login -u ${USER} --password-stdin http://localhost:2022/"
+            //   sh "docker push http://localhost:2022/my30nginx:${BUILD_NUMBER}"  
 
             }
           } catch (Exception e) {
