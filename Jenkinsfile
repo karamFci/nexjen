@@ -45,12 +45,7 @@ pipeline {
               sh "docker tag $imageName $registry$imageName:${env.BUILD_NUMBER}"
               sh "docker push $registry$imageName:${env.BUILD_NUMBER}"
             }
-              emailext(
-                subject: 'Docker Image Pushed to Nexus',
-                body: 'The Docker image has been successfully pushed to Nexus.',
-                to: 'karam.fci@gmail.com',
-                mimeType: 'text/html'
-            )
+            mail  body: 'The Docker image has been successfully pushed to Nexus.', subject: 'Docker Image Pushed to Nexus', to: 'karam.fci@gmail.com'
 
             
           } catch (Exception e) {
